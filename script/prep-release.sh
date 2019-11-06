@@ -117,7 +117,7 @@ cd ../..
 mkdir sigs
 for src_file in `ls src`
 do
-  openssl cms -sign -binary -noattr -in src/$src_file \
+  openssl cms -sign -binary -noattr -passin pass:$encrypted_codesign_key -in src/$src_file \
   -signer script/codesign.crt -inkey script/codesign.key -certfile script/ca-netboot-xyz.crt -outform DER \
   -out sigs/$src_file.sig
   echo Generated signature for $src_file...
