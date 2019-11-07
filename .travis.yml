@@ -18,6 +18,18 @@ deploy:
     skip_cleanup: true
     on:
       repo: antonym/netboot.xyz
+- provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  #file: "FILE TO UPLOAD"
+  file_glob: true
+  file: build/**/*
+  skip_cleanup: true
+  draft: true
+  overwrite: true
+on:
+      repo: bofhbug/netboot.xyz
 after_deploy:
   - aws configure set preview.cloudfront true
   - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST_ID_BOOT --paths "/*"
+      on:
+        repo: antonym/netboot.xyz
