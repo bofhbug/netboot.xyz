@@ -9,7 +9,6 @@ before_install:
 - sudo pip install awscli tornado
 script:
 - "./script/prep-release.sh"
-
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -19,18 +18,6 @@ deploy:
     skip_cleanup: true
     on:
       repo: antonym/netboot.xyz
-- provider: releases
-  api_key: $encrypted_GITHUB_PA_TOKEN
-  #file: "FILE TO UPLOAD"
-  file_glob: true
-  file: build/**/*
-  skip_cleanup: true
-  #draft: true
-  overwrite: true
-on:
-      repo: bofhbug/netboot.xyz
 after_deploy:
   - aws configure set preview.cloudfront true
   - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST_ID_BOOT --paths "/*"
-      on:
-        repo: antonym/netboot.xyz
